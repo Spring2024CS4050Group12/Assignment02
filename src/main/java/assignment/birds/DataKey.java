@@ -14,6 +14,14 @@ public class DataKey {
 		birdSize = size;
 	}
 
+	@Override
+	public String toString() {
+		return "DataKey{" +
+				"birdName='" + birdName + '\'' +
+				", birdSize=" + birdSize +
+				'}';
+	}
+
 	public String getBirdName() {
 		return birdName;
 	}

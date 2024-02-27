@@ -55,7 +55,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      */
     @Override
     public void insert(BirdRecord r) throws DictionaryException {
-        // Write this method
+        root = new Node(r, null, root);
     }
 
     /**

@@ -109,7 +109,11 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      */
     @Override
     public void remove(DataKey k) throws DictionaryException {
-        // Write this method
+        Node node = findNode(k);
+        if (node == root)
+            root = node.removed();
+        else
+            node.replace(node.removed());
     }
 
     /**

@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -65,7 +66,14 @@ public class MammalsController implements Initializable {
             mammal = database.find(key);
             showMammal();
         } catch (DictionaryException ex) {
-            displayAlert(ex.getMessage());
+            if (Objects.equals(ex.getMessage(), "There is no record matches the given key")) {
+                try {
+                    mammal = database.partialFind(key);
+                    showMammal();
+                } catch (DictionaryException ex2) {
+                    displayAlert(ex2.getMessage());
+                }
+            }
         }
     }
 

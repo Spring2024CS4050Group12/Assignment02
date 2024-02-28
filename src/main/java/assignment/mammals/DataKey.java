@@ -36,7 +36,7 @@ public class DataKey {
 	 */
 	public int compareTo(DataKey k) {
             if (this.getMammalSize() == k.getMammalSize()) {
-                int compare = this.mammalName.compareTo(k.getMammalName());
+                int compare = this.mammalName.toLowerCase().compareTo(k.getMammalName().toLowerCase());
                 if (compare == 0){
                      return 0;
                 } 

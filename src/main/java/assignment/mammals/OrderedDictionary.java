@@ -43,6 +43,35 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     /**
+     * Returns the Node object with key k, or it returns null if such a record
+     * is not in the dictionary.
+     * Looks for a substring of the primary key
+     *
+     * @param k
+     * @return
+     * @throws assignment/mammals/DictionaryException.java
+     */
+    public Node partialFindKey(DataKey k) throws DictionaryException {
+        if (isEmpty()) {
+            throw new DictionaryException("There is no record matches the given key");
+        }
+
+        Node current = root.leastDescendant();
+
+        while (true) {
+            if (current.getData().getDataKey().getMammalName().toLowerCase().contains(k.getMammalName().toLowerCase()))
+                return current;
+            try {
+                current = nodeSuccessor(current);
+            } catch (DictionaryException ex) {
+                throw new DictionaryException("There is no record matches the given key");
+            }
+            if (current == null)
+                throw new DictionaryException("There is no record matches the given key");
+        }
+    }
+
+    /**
      * Returns the Record object with key k, or it returns null if such a record
      * is not in the dictionary.
      *
@@ -53,6 +82,18 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     @Override
     public MammalRecord find(DataKey k) throws DictionaryException {
         return findNode(k).getData();
+    }
+
+    /**
+     * Returns the Record object with partial key k, or it returns null if such a record
+     * is not in the dictionary.
+     *
+     * @param k
+     * @return
+     * @throws assignment/mammals/DictionaryException.java
+     */
+    public MammalRecord partialFind(DataKey k) throws DictionaryException {
+        return partialFindKey(k).getData();
     }
 
     /**
@@ -119,6 +160,33 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     }
 
     /**
+     * Returns the successor of n (the record from the ordered dictionary with
+     * smallest key larger than n); it returns null if the given key has no
+     * successor.
+     *
+     * @param n
+     * @return
+     * @throws mammals.DictionaryException
+     */
+    public Node nodeSuccessor(Node n) throws DictionaryException{
+        if(n.hasRightChild()) {
+            return n.getRightChild().leastDescendant();
+        } else {
+            Node parent = n.getParent();
+            while (n.hasParent() && n == parent.getRightChild()) {
+                n = parent;
+                parent = parent.getParent();
+            }
+
+
+            if (parent == null) {
+                throw new DictionaryException("This record has no successor");
+            }
+            return parent;
+        }
+    }
+
+    /**
      * Returns the successor of k (the record from the ordered dictionary with
      * smallest key larger than k); it returns null if the given key has no
      * successor. The given key DOES NOT need to be in the dictionary.
@@ -131,23 +199,35 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     public MammalRecord successor(DataKey k) throws DictionaryException{
         Node current = findNode(k);
 
-        if(current.hasRightChild()) {
-            return current.getRightChild().leastDescendant().getData();
+        return nodeSuccessor(current).getData();
+    }
+
+    /**
+     * Returns the predecessor of n (the Node from the ordered dictionary with
+     * largest key smaller than n; it returns null if the given node has no
+     * predecessor.
+     *
+     * @param n
+     * @return
+     * @throws mammals.DictionaryException
+     */
+    public Node nodePredecessor(Node n) throws DictionaryException{
+        if(n.hasLeftChild()) {
+            return n.getLeftChild().greatestDescendant();
         } else {
-            Node parent = current.getParent();
-            while (current.hasParent() && current == parent.getRightChild()) {
-                current = parent;
+            Node parent = n.getParent();
+            while (n.hasParent() && n == parent.getLeftChild()) {
+                n = parent;
                 parent = parent.getParent();
             }
 
 
             if (parent == null) {
-                throw new DictionaryException("This record has no successor");
+                throw new DictionaryException("This record has no predecessor");
             }
-            return parent.getData();
+            return parent;
         }
     }
-
    
     /**
      * Returns the predecessor of k (the record from the ordered dictionary with
@@ -162,21 +242,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     public MammalRecord predecessor(DataKey k) throws DictionaryException{
         Node current = findNode(k);
 
-        if(current.hasLeftChild()) {
-            return current.getLeftChild().greatestDescendant().getData();
-        } else {
-            Node parent = current.getParent();
-            while (current.hasParent() && current == parent.getLeftChild()) {
-                current = parent;
-                parent = parent.getParent();
-            }
-
-
-            if (parent == null) {
-                throw new DictionaryException("This record has no predecessor");
-            }
-            return parent.getData();
-        }
+        return nodePredecessor(current).getData();
     }
 
     /**

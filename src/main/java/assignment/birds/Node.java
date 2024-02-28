@@ -85,10 +85,10 @@ public class Node {
 	}
 
 	public Node greatestDescendant() {
-		return (getRightChild() == null)? this : this._rightChild.greatestDescendant();
+		return hasRightChild()? this._rightChild.greatestDescendant() : this;
 	}
 
 	public Node leastDescendant() {
-		return (getLeftChild() == null)? this : this._leftChild.leastDescendant();
+		return hasLeftChild()? this._leftChild.leastDescendant() : this;
 	}
 }

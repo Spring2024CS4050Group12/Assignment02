@@ -2,11 +2,7 @@ package assignment.birds;
 
 public class OrderedDictionary implements OrderedDictionaryADT {
 
-    Node root;
-
-    OrderedDictionary() {
-        root = new Node();
-    }
+    Node root = null;
 
     /**
      * Returns the Node object with key k, or it returns null if such a record
@@ -19,7 +15,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     public Node findNode(DataKey k) throws DictionaryException {
         Node current = root;
         int comparison;
-        if (root.isEmpty()) {
+        if (isEmpty()) {
             throw new DictionaryException("There is no record matches the given key");
         }
 
@@ -69,7 +65,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = root;
         int comparison;
 
-        if (root.isEmpty()) {
+        if (isEmpty()) {
             root = new Node(r);
             return;
         }
@@ -208,6 +204,6 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     /* Returns true if the dictionary is empty, and true otherwise. */
     @Override
     public boolean isEmpty (){
-        return root.isEmpty();
+        return root == null;
     }
 }

@@ -83,4 +83,46 @@ public class Node {
 	public boolean isEmpty() {
 		return (_data.getDataKey() == null) ;
 	}
+
+	public Node greatestDescendant() {
+		return hasRightChild()? this._rightChild.greatestDescendant() : this;
+	}
+
+	public Node leastDescendant() {
+		return hasLeftChild()? this._leftChild.leastDescendant() : this;
+	}
+
+	public void replace(Node node) {
+		if (!hasParent()) return;
+
+		if (_parent.getRightChild() == this)
+			_parent.setRightChild(node);
+		else
+			_parent.setLeftChild(node);
+	}
+
+	public Node removed() {
+		if (isLeaf())
+			return null;
+
+		Node replacement;
+
+		if (!hasLeftChild())
+			replacement = _rightChild;
+
+		else if (!hasRightChild())
+			replacement = _leftChild;
+
+		else {
+			replacement = _leftChild.greatestDescendant();
+			replacement.replace(null);
+
+			replacement.setLeftChild(_leftChild);
+			replacement.setRightChild(_rightChild);
+		}
+
+		replacement.setParent(_parent);
+
+		return replacement;
+	}
 }

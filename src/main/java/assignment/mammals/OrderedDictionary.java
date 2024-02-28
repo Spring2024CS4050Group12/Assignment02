@@ -1,12 +1,10 @@
 package assignment.mammals;
 
+import assignment.mammals.MammalRecord;
+
 public class OrderedDictionary implements OrderedDictionaryADT {
 
-    Node root;
-
-    OrderedDictionary() {
-        root = new Node();
-    }
+    Node root = null;
 
     /**
      * Returns the Node object with key k, or it returns null if such a record
@@ -19,7 +17,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
     public Node findNode(DataKey k) throws DictionaryException {
         Node current = root;
         int comparison;
-        if (root.isEmpty()) {
+        if (isEmpty()) {
             throw new DictionaryException("There is no record matches the given key");
         }
 
@@ -69,7 +67,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = root;
         int comparison;
 
-        if (root.isEmpty()) {
+        if (isEmpty()) {
             root = new Node(r);
             return;
         }
@@ -113,7 +111,11 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      */
     @Override
     public void remove(DataKey k) throws DictionaryException {
-        // Write this method
+        Node node = findNode(k);
+        if (node == root)
+            root = node.removed();
+        else
+            node.replace(node.removed());
     }
 
     /**
@@ -130,12 +132,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = findNode(k);
 
         if(current.hasRightChild()) {
-            current = current.getRightChild();
-            while (current.hasLeftChild()) {
-                current = current.getLeftChild();
-            }
-
-            return current.getData();
+            return current.getRightChild().leastDescendant().getData();
         } else {
             Node parent = current.getParent();
             while (current.hasParent() && current == parent.getRightChild()) {
@@ -166,12 +163,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = findNode(k);
 
         if(current.hasLeftChild()) {
-            current = current.getLeftChild();
-            while (current.hasRightChild()) {
-                current = current.getRightChild();
-            }
-
-            return current.getData();
+            return current.getLeftChild().greatestDescendant().getData();
         } else {
             Node parent = current.getParent();
             while (current.hasParent() && current == parent.getLeftChild()) {
@@ -194,9 +186,12 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @return
      */
     @Override
-    public MammalRecord smallest() throws DictionaryException{
-        // Write this method
-        return null; // change this statement
+    public MammalRecord smallest() throws DictionaryException {
+        if (isEmpty()) {
+            throw new DictionaryException("Dictionary is empty!");
+        }
+
+        return root.leastDescendant().getData();
     }
 
     /*
@@ -205,13 +200,16 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      */
     @Override
     public MammalRecord largest() throws DictionaryException{
-        // Write this method
-        return null; // change this statement
+        if (isEmpty()) {
+            throw new DictionaryException("Dictionary is empty!");
+        }
+
+        return root.greatestDescendant().getData();
     }
       
     /* Returns true if the dictionary is empty, and true otherwise. */
     @Override
     public boolean isEmpty (){
-        return root.isEmpty();
+        return root == null;
     }
 }

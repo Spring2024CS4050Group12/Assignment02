@@ -40,12 +40,12 @@
                                 <Insets right="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="next" minWidth="-Infinity" mnemonicParsing="false" onAction="#next" prefHeight="28.0" prefWidth="90.0" style="-fx-background-color: lightgreen;" text="Next">
+                        <Button fx:id="previous" minWidth="-Infinity" mnemonicParsing="false" onAction="#previous" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: lightgreen;" text="Previous">
                             <HBox.margin>
                                 <Insets left="10.0" right="10.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="previous" minWidth="-Infinity" mnemonicParsing="false" onAction="#previous" prefHeight="27.0" prefWidth="90.0" style="-fx-background-color: lightgreen;" text="Previous">
+                        <Button fx:id="next" minWidth="-Infinity" mnemonicParsing="false" onAction="#next" prefHeight="28.0" prefWidth="90.0" style="-fx-background-color: lightgreen;" text="Next">
                             <HBox.margin>
                                 <Insets left="10.0" right="10.0" />
                             </HBox.margin>

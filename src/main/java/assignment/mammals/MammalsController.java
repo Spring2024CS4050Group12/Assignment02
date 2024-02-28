@@ -154,13 +154,21 @@ public class MammalsController implements Initializable {
     }
 
     public void first() {
-        // Write this method
-        mammal = database.root.getData();
+        try {
+            mammal = database.smallest();
+        } catch (DictionaryException ex) {
+            displayAlert(ex.getMessage());
+        }
         showMammal();
     }
 
     public void last() {
-        // Write this method
+        try {
+            bird = database.largest();
+        } catch (DictionaryException ex) {
+            displayAlert(ex.getMessage());
+        }
+        showBird();
     }
 
     public void next() {

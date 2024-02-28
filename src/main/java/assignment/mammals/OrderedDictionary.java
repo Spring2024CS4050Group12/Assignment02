@@ -1,4 +1,4 @@
-package assignment.birds;
+package assignment.mammals;
 
 public class OrderedDictionary implements OrderedDictionaryADT {
 
@@ -14,7 +14,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      *
      * @param k
      * @return
-     * @throws assignment/birds/DictionaryException.java
+     * @throws assignment/mammals/DictionaryException.java
      */
     public Node findNode(DataKey k) throws DictionaryException {
         Node current = root;
@@ -50,10 +50,10 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      *
      * @param k
      * @return
-     * @throws assignment/birds/DictionaryException.java
+     * @throws assignment/mammals/DictionaryException.java
      */
     @Override
-    public BirdRecord find(DataKey k) throws DictionaryException {
+    public MammalRecord find(DataKey k) throws DictionaryException {
         return findNode(k).getData();
     }
 
@@ -62,10 +62,10 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * a record with the same key as r is already in the dictionary.
      *
      * @param r
-     * @throws birds.DictionaryException
+     * @throws mammals.DictionaryException
      */
     @Override
-    public void insert(BirdRecord r) throws DictionaryException {
+    public void insert(MammalRecord r) throws DictionaryException {
         Node current = root;
         int comparison;
 
@@ -109,7 +109,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * DictionaryException if the record is not in the dictionary.
      *
      * @param k
-     * @throws birds.DictionaryException
+     * @throws mammals.DictionaryException
      */
     @Override
     public void remove(DataKey k) throws DictionaryException {
@@ -123,10 +123,10 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      *
      * @param k
      * @return
-     * @throws birds.DictionaryException
+     * @throws mammals.DictionaryException
      */
     @Override
-    public BirdRecord successor(DataKey k) throws DictionaryException{
+    public MammalRecord successor(DataKey k) throws DictionaryException{
         Node current = findNode(k);
 
         if(current.hasRightChild()) {
@@ -159,10 +159,10 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      *
      * @param k
      * @return
-     * @throws birds.DictionaryException
+     * @throws mammals.DictionaryException
      */
     @Override
-    public BirdRecord predecessor(DataKey k) throws DictionaryException{
+    public MammalRecord predecessor(DataKey k) throws DictionaryException{
         Node current = findNode(k);
 
         if(current.hasLeftChild()) {
@@ -194,7 +194,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @return
      */
     @Override
-    public BirdRecord smallest() throws DictionaryException{
+    public MammalRecord smallest() throws DictionaryException{
         // Write this method
         return null; // change this statement
     }
@@ -204,7 +204,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
 	 * null if the dictionary is empty.
      */
     @Override
-    public BirdRecord largest() throws DictionaryException{
+    public MammalRecord largest() throws DictionaryException{
         // Write this method
         return null; // change this statement
     }

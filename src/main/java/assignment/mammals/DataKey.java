@@ -1,8 +1,8 @@
-package assignment.birds;
+package assignment.mammals;
 
 public class DataKey {
-	private String birdName;
-	private int birdSize;
+	private String mammalName;
+	private int mammalSize;
 
 	// default constructor
 	public DataKey() {
@@ -10,24 +10,24 @@ public class DataKey {
 	}
         
 	public DataKey(String name, int size) {
-		birdName = name;
-		birdSize = size;
+		mammalName = name;
+		mammalSize = size;
 	}
 
 	@Override
 	public String toString() {
 		return "DataKey{" +
-				"birdName='" + birdName + '\'' +
-				", birdSize=" + birdSize +
+				"mammalName='" + mammalName + '\'' +
+				", mammalSize=" + mammalSize +
 				'}';
 	}
 
-	public String getBirdName() {
-		return birdName;
+	public String getMammalName() {
+		return mammalName;
 	}
 
-	public int getBirdSize() {
-		return birdSize;
+	public int getMammalSize() {
+		return mammalSize;
 	}
 
 	/**
@@ -35,8 +35,8 @@ public class DataKey {
 	 * than k, and it returns 1 otherwise. 
 	 */
 	public int compareTo(DataKey k) {
-            if (this.getBirdSize() == k.getBirdSize()) {
-                int compare = this.birdName.compareTo(k.getBirdName());
+            if (this.getMammalSize() == k.getMammalSize()) {
+                int compare = this.mammalName.compareTo(k.getMammalName());
                 if (compare == 0){
                      return 0;
                 } 
@@ -44,7 +44,7 @@ public class DataKey {
                     return -1;
                 }
             }
-            else if(this.getBirdSize() < k.getBirdSize()){
+            else if(this.getMammalSize() < k.getMammalSize()){
                     return -1;
             }
             return 1;

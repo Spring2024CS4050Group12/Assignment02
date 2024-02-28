@@ -1,4 +1,4 @@
-package assignment.birds;
+package assignment.mammals;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -27,14 +27,14 @@ import java.util.logging.Logger;
  *
  * @author Ouda
  */
-public class BirdsController implements Initializable {
+public class MammalsController implements Initializable {
 
     @FXML
     private MenuBar mainMenu;
     @FXML
     private ImageView image;
     @FXML
-    private BorderPane BirdPortal;
+    private BorderPane MammalPortal;
     @FXML
     private Label title;
     @FXML
@@ -50,8 +50,8 @@ public class BirdsController implements Initializable {
     Media media;
     MediaPlayer player;
     OrderedDictionary database = null;
-    BirdRecord bird = null;
-    int birdSize = 1;
+    MammalRecord mammal = null;
+    int mammalSize = 1;
 
     @FXML
     public void exit() {
@@ -60,59 +60,59 @@ public class BirdsController implements Initializable {
     }
 
     public void find() {
-        DataKey key = new DataKey(this.name.getText(), birdSize);
+        DataKey key = new DataKey(this.name.getText(), mammalSize);
         try {
-            bird = database.find(key);
-            showBird();
+            mammal = database.find(key);
+            showMammal();
         } catch (DictionaryException ex) {
             displayAlert(ex.getMessage());
         }
     }
 
     public void delete() {
-        BirdRecord previousBird = null;
+        MammalRecord previousMammal = null;
         try {
-            previousBird = database.predecessor(bird.getDataKey());
+            previousMammal = database.predecessor(mammal.getDataKey());
         } catch (DictionaryException ex) {
 
         }
-        BirdRecord nextBird = null;
+        MammalRecord nextMammal = null;
         try {
-            nextBird = database.successor(bird.getDataKey());
+            nextMammal = database.successor(mammal.getDataKey());
         } catch (DictionaryException ex) {
 
         }
-        DataKey key = bird.getDataKey();
+        DataKey key = mammal.getDataKey();
         try {
             database.remove(key);
         } catch (DictionaryException ex) {
             System.out.println("Error in delete "+ ex);
         }
         if (database.isEmpty()) {
-            this.BirdPortal.setVisible(false);
-            displayAlert("No more birds in the database to show");
+            this.MammalPortal.setVisible(false);
+            displayAlert("No more mammals in the database to show");
         } else {
-            if (previousBird != null) {
-                bird = previousBird;
-                showBird();
-            } else if (nextBird != null) {
-                bird = nextBird;
-                showBird();
+            if (previousMammal != null) {
+                mammal = previousMammal;
+                showMammal();
+            } else if (nextMammal != null) {
+                mammal = nextMammal;
+                showMammal();
             }
         }
     }
 
-    private void showBird() {
+    private void showMammal() {
         play.setDisable(false);
         puase.setDisable(true);
         if (player != null) {
             player.stop();
         }
-        String img = bird.getImage();
-        Image birdImage = new Image("file:src/main/resources/assignment/birds/images/" + img);
-        image.setImage(birdImage);
-        title.setText(bird.getDataKey().getBirdName());
-        about.setText(bird.getAbout());
+        String img = mammal.getImage();
+        Image mammalImage = new Image("file:src/main/resources/assignment/mammals/images/" + img);
+        image.setImage(mammalImage);
+        title.setText(mammal.getDataKey().getMammalName());
+        about.setText(mammal.getAbout());
     }
 
     private void displayAlert(String msg) {
@@ -126,7 +126,7 @@ public class BirdsController implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
 
-            stage.getIcons().add(new Image("file:src/main/resources/assignment/birds/images/UMIcon.png"));
+            stage.getIcons().add(new Image("file:src/main/resources/assignment/mammals/images/UMIcon.png"));
             stage.setTitle("Dictionary Exception");
             controller.setAlertText(msg);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -140,13 +140,13 @@ public class BirdsController implements Initializable {
     public void getSize() {
         switch (this.size.getValue().toString()) {
             case "Small":
-                this.birdSize = 1;
+                this.mammalSize = 1;
                 break;
             case "Medium":
-                this.birdSize = 2;
+                this.mammalSize = 2;
                 break;
             case "Large":
-                this.birdSize = 3;
+                this.mammalSize = 3;
                 break;
             default:
                 break;
@@ -155,8 +155,8 @@ public class BirdsController implements Initializable {
 
     public void first() {
         // Write this method
-        bird = database.root.getData();
-        showBird();
+        mammal = database.root.getData();
+        showMammal();
     }
 
     public void last() {
@@ -165,8 +165,8 @@ public class BirdsController implements Initializable {
 
     public void next() {
         try {
-            bird = database.successor(bird.getDataKey());
-            showBird();
+            mammal = database.successor(mammal.getDataKey());
+            showMammal();
         } catch (DictionaryException ex) {
             displayAlert(ex.getMessage());
         }
@@ -174,15 +174,15 @@ public class BirdsController implements Initializable {
 
     public void previous() {
         try {
-            bird = database.predecessor(bird.getDataKey());
-            showBird();
+            mammal = database.predecessor(mammal.getDataKey());
+            showMammal();
         } catch (DictionaryException ex) {
             displayAlert(ex.getMessage());
         }
     }
 
     public void play() {
-        String filename = "src/main/resources/assignment/birds/sounds/" + bird.getSound();
+        String filename = "src/main/resources/assignment/mammals/sounds/" + mammal.getSound();
         media = new Media(new File(filename).toURI().toString());
         player = new MediaPlayer(media);
         play.setDisable(true);
@@ -202,7 +202,7 @@ public class BirdsController implements Initializable {
         Scanner input;
         int line = 0;
         try {
-            String birdName = "";
+            String mammalName = "";
             String description;
             int size = 0;
             input = new Scanner(new File("MammalsDatabase.txt"));
@@ -214,11 +214,11 @@ public class BirdsController implements Initializable {
                         size = Integer.parseInt(data);
                         break;
                     case 1:
-                        birdName = data;
+                        mammalName = data;
                         break;
                     default:
                         description = data;
-                        database.insert(new BirdRecord(new DataKey(birdName, size), description, birdName + ".mp3", birdName + ".jpg"));
+                        database.insert(new MammalRecord(new DataKey(mammalName, size), description, mammalName + ".mp3", mammalName + ".jpg"));
                         break;
                 }
                 line++;
@@ -227,9 +227,9 @@ public class BirdsController implements Initializable {
             System.out.println("There was an error in reading or opening the file: MammalsDatabase.txt");
             System.out.println(e.getMessage());
         } catch (DictionaryException ex) {
-            Logger.getLogger(BirdsController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MammalsController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.BirdPortal.setVisible(true);
+        this.MammalPortal.setVisible(true);
         this.first();
     }
 

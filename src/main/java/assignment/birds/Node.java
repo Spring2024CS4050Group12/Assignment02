@@ -83,4 +83,12 @@ public class Node {
 	public boolean isEmpty() {
 		return (_data.getDataKey() == null) ;
 	}
+
+	public Node greatestDescendant() {
+		return (getRightChild() == null)? this : this._rightChild.greatestDescendant();
+	}
+
+	public Node leastDescendant() {
+		return (getLeftChild() == null)? this : this._leftChild.leastDescendant();
+	}
 }

@@ -130,12 +130,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = findNode(k);
 
         if(current.hasRightChild()) {
-            current = current.getRightChild();
-            while (current.hasLeftChild()) {
-                current = current.getLeftChild();
-            }
-
-            return current.getData();
+            return current.getRightChild().leastDescendant().getData();
         } else {
             Node parent = current.getParent();
             while (current.hasParent() && current == parent.getRightChild()) {
@@ -166,12 +161,7 @@ public class OrderedDictionary implements OrderedDictionaryADT {
         Node current = findNode(k);
 
         if(current.hasLeftChild()) {
-            current = current.getLeftChild();
-            while (current.hasRightChild()) {
-                current = current.getRightChild();
-            }
-
-            return current.getData();
+            return current.getLeftChild().greatestDescendant().getData();
         } else {
             Node parent = current.getParent();
             while (current.hasParent() && current == parent.getLeftChild()) {
@@ -194,9 +184,12 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      * @return
      */
     @Override
-    public BirdRecord smallest() throws DictionaryException{
-        // Write this method
-        return null; // change this statement
+    public BirdRecord smallest() throws DictionaryException {
+        if (isEmpty()) {
+            throw new DictionaryException("Dictionary is empty!");
+        }
+
+        return root.leastDescendant().getData();
     }
 
     /*
@@ -205,8 +198,11 @@ public class OrderedDictionary implements OrderedDictionaryADT {
      */
     @Override
     public BirdRecord largest() throws DictionaryException{
-        // Write this method
-        return null; // change this statement
+        if (isEmpty()) {
+            throw new DictionaryException("Dictionary is empty!");
+        }
+
+        return root.greatestDescendant().getData();
     }
       
     /* Returns true if the dictionary is empty, and true otherwise. */

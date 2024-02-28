@@ -164,11 +164,11 @@ public class MammalsController implements Initializable {
 
     public void last() {
         try {
-            bird = database.largest();
+            mammal = database.largest();
         } catch (DictionaryException ex) {
             displayAlert(ex.getMessage());
         }
-        showBird();
+        showMammal();
     }
 
     public void next() {
